@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28917.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpSchedule", "OpSchedule\OpSchedule.csproj", "{774840E0-4116-42B8-A165-2AEBEF8118CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GanttChart", "GanttChart\GanttChart.csproj", "{82763ACA-980C-475F-84D2-0D6497D064F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{774840E0-4116-42B8-A165-2AEBEF8118CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{774840E0-4116-42B8-A165-2AEBEF8118CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{774840E0-4116-42B8-A165-2AEBEF8118CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{774840E0-4116-42B8-A165-2AEBEF8118CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82763ACA-980C-475F-84D2-0D6497D064F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82763ACA-980C-475F-84D2-0D6497D064F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82763ACA-980C-475F-84D2-0D6497D064F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82763ACA-980C-475F-84D2-0D6497D064F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C03D840-106C-4576-A33E-0D3563BE1B6A}
+	EndGlobalSection
+EndGlobal
