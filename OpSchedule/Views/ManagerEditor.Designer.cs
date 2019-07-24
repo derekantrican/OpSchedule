@@ -924,6 +924,7 @@
             // 
             // buttonToggleChartCounts
             // 
+            this.buttonToggleChartCounts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonToggleChartCounts.Location = new System.Drawing.Point(4, 340);
             this.buttonToggleChartCounts.Name = "buttonToggleChartCounts";
             this.buttonToggleChartCounts.Size = new System.Drawing.Size(154, 23);

@@ -55,8 +55,9 @@ namespace OpSchedule.Views
             int refYear = navGanttChart.GanttChart.StartDate.Year;
             foreach (Holiday holiday in Common.Holidays)
             {
-                if (holiday.Active)
-                    navGanttChart.GanttChart.Holidays.Add(holiday.CalcHolidayDate(refYear), holiday.Name);
+                DateTime calcHolidayDate = holiday.CalcHolidayDate(refYear);
+                if (holiday.Active && !navGanttChart.GanttChart.Holidays.ContainsKey(calcHolidayDate))
+                    navGanttChart.GanttChart.Holidays.Add(calcHolidayDate, holiday.Name);
             }
         }
 
@@ -69,6 +70,13 @@ namespace OpSchedule.Views
         {
             if (!AreUsernamesValid(Common.AllData()))
                 return;
+
+            if (Common.PendingPersonChanges.Count == 0 &&
+                Common.PendingShiftChanges.Count == 0)
+            {
+                MessageBox.Show("There are no pending changes to publish");
+                return;
+            }
 
             Serializers.SerializeSchedule(Common.AllData());
             Serializers.SerializeHolidays(Common.Holidays);
@@ -343,12 +351,12 @@ namespace OpSchedule.Views
 
         private bool AreUsernamesValid(List<Person> peopleToValidate, bool showMessage = true)
         {
-            bool result = peopleToValidate.Any(p => string.IsNullOrEmpty(p.Username));
+            bool anyMissingUsernames = peopleToValidate.Any(p => string.IsNullOrEmpty(p.Username));
 
-            if (showMessage && !result)
+            if (showMessage && anyMissingUsernames)
                 MessageBox.Show("Please go to the \"People\" tab and make sure a username is defined for everyone");
 
-            return result;
+            return !anyMissingUsernames;
         }
         #endregion People
 
@@ -411,7 +419,7 @@ namespace OpSchedule.Views
             int index = checkedListBoxHolidays.SelectedIndex;
             bool holidayActive = checkedListBoxHolidays.GetItemChecked(index);
             Holiday selectedHoliday = checkedListBoxHolidays.SelectedItem as Holiday;
-            selectedHoliday.Name = textBoxName.Text;
+            selectedHoliday.Name = textBoxHolidayName.Text;
             if (dateTimePickerHolidayDate.Checked)
                 selectedHoliday.OverrideDate = dateTimePickerHolidayDate.Value;
             else

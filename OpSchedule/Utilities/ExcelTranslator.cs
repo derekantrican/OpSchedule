@@ -44,7 +44,8 @@ namespace OpSchedule.Utilities
 
         public void Close()
         {
-            worksheets.Dispose();
+            if (worksheets != null)
+                worksheets.Dispose();
         }
 
         private List<string> GetNames(ExcelWorksheet ws)

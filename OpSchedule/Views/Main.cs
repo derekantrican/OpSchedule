@@ -24,7 +24,7 @@ namespace OpSchedule
          * - "Now Indicator" shows where the current time is
          * - Timezone changing
          * - Person adding/removing (via the Demo Editor for now)
-         * - "Tier counter": how many people on each tier right now (via the Demo Editor for now)
+         * - "Tier counter": how many people on each tier right now
          * - Setting to "Automatically adjust timezone" that will disable the manual timezone setting and automatically set your timezone based on computer timezone
          * - Ribbon (initial filters, settings)
          * - Custom filters (shift title contains {text}, shift notes contain {text}, shift is {color}, and "inverted" options)
@@ -58,10 +58,6 @@ namespace OpSchedule
          * - An option for "list view" that would end up looking very similar to the old excel schedule. Basically, instead of having navigation buttons on one gantt chart,
          *      we would list multiple gantt charts (~52, enough to cover the whole year) in a list that all pull from the same data list but have different Start/End Dates
          * - Add buttons for special views (Day/Week). Maybe support a "month" view in the future?
-         *
-         * 
-         * - Then update the Update.txt file on the server
-         * 
          * 
          * 
          *              FUTURE FEATURES
@@ -214,7 +210,7 @@ namespace OpSchedule
                         List<Shift> changedShifts = newPersonsNotInCurrent.FirstOrDefault(p => p.Username == CurrentUser?.Username)?.GetShifts()
                                                         .Where(p => p.Clickable).ToList();
                         if (Settings.Instance.NotifyScheduleChange && changedShifts != null && changedShifts.Count > 0)
-                            ShowNotification("There has been a change to your schedule", string.Join("\n", changedShifts));
+                            ShowNotification("There has been a change to your schedule", string.Join("\n", changedShifts), delay: 7000);
 
                         UpdateStatusStrip("Chart data updated", overwriteErrors: false);
                     }
@@ -255,8 +251,9 @@ namespace OpSchedule
             int refYear = navGanttChart.GanttChart.StartDate.Year;
             foreach (Holiday holiday in Common.Holidays)
             {
-                if (holiday.Active)
-                    navGanttChart.GanttChart.Holidays.Add(holiday.CalcHolidayDate(refYear), holiday.Name);
+                DateTime calcHolidayDate = holiday.CalcHolidayDate(refYear);
+                if (holiday.Active && !navGanttChart.GanttChart.Holidays.ContainsKey(calcHolidayDate))
+                    navGanttChart.GanttChart.Holidays.Add(calcHolidayDate, holiday.Name);
             }
         }
 
@@ -326,14 +323,14 @@ namespace OpSchedule
             }
         }
 
-        private void ShowNotification(string title, string subtitle, bool autoHide = true, bool withSound = true)
+        private void ShowNotification(string title, string subtitle, bool autoHide = true, bool withSound = true, int delay = 5000)
         {
             this.Invoke((MethodInvoker)delegate
             {
                 if (this.WindowState == FormWindowState.Minimized)
                     autoHide = false;
 
-                Notification notify = new Notification(title, subtitle, autoHide, withSound);
+                Notification notify = new Notification(title, subtitle, autoHide, withSound, delay);
                 notify.ParentForm = this;
                 notify.Show();
 
@@ -562,7 +559,7 @@ namespace OpSchedule
             editor.RefreshGanttChart += Editor_RefreshGanttChart;
             editor.ToggleChartCounts += () => 
             {
-                SetCountsVisiblity(countsVisible);
+                SetCountsVisiblity(!countsVisible);
                 countsVisible = !countsVisible;
             };
             editor.Show();
@@ -707,6 +704,9 @@ namespace OpSchedule
 
         private void RibbonButtonSettings_MouseClick(object sender, MouseEventArgs e)
         {
+            ShowNotification("This is a title", "this is a subtitle");
+            return;
+
             TimeZoneInfo oldTimeZone = Settings.Instance.TimeZone;
 
             SettingsWindow settings = new SettingsWindow();

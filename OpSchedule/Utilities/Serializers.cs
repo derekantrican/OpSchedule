@@ -68,6 +68,9 @@ namespace OpSchedule.Utilities
         private static List<Person> DeserializeSchedule(string path)
         {
             List<Person> result = new List<Person>();
+            if (!File.Exists(path))
+                return result;
+
             XmlDocument document = new XmlDocument();
             document.Load(path);
 

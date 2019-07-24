@@ -54,11 +54,6 @@ namespace OpSchedule.Views
                 labelCount.Width = countSize.Width + 5;
                 labelCount.Left = (this.Width - countSize.Width - 5) / 2;
             }
-            Console.WriteLine("countSize width: " + countSize.Width);
-            Console.WriteLine("labelCount width: " + labelCount.Width);
-
-            Console.WriteLine("labelCount fontsize: " + labelCount.Font.Size);
-            Console.WriteLine("displayFont size: " + displayFont.Size);
         }
 
         private void AdjustVertically()

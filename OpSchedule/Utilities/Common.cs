@@ -137,8 +137,8 @@ namespace OpSchedule
                 Directory.CreateDirectory(LogPath);
 
             if (!Directory.Exists(Serializers.DataPath) ||
-                !File.Exists(Serializers.SchedulePath) ||
-                !File.Exists(Serializers.HolidayPath))
+                (!File.Exists(Serializers.SchedulePath) &&
+                !File.Exists(Serializers.HolidayPath)))
                 HasVPNConnection = false;
         }
 

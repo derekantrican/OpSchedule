@@ -11,7 +11,7 @@ namespace OpSchedule.Views
         public static readonly List<Notification> OpenNotifications = new List<Notification>();
         public new Main ParentForm;
         private Timer lifeTimer = new Timer();
-        public Notification(string notificationTitle, string notificationMessage, bool hideAfterDelay = true, bool withSound = true)
+        public Notification(string notificationTitle, string notificationMessage, bool hideAfterDelay = true, bool withSound = true, int delay = 5000)
         {
             InitializeComponent();
 
@@ -33,7 +33,7 @@ namespace OpSchedule.Views
                     player.Play();
             }
 
-            lifeTimer.Interval = 5000; //Show the notification for 5 seconds
+            lifeTimer.Interval = delay; //How long to show the notification (in ms)
             lifeTimer.Tick += LifeTimer_Tick;
 
             if (hideAfterDelay)
